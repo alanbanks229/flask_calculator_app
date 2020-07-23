@@ -61,6 +61,7 @@ def operation_result():
             calculation_success=False,
             error="You cannot divide by zero"
         )
+        
     except ValueError:
         return render_template(
             'index.html',
