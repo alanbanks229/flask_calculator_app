@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css"
+    href="{{ url_for('static', filename='calculator.css') }}"/>
+</head>
+<body>
+    <h1>Python Flask Calculator</h1>
+    <form method="post" action="{{ url_for('operation_result') }}" id="calculator_form">
+        <label for="Input1">Input1:</label>
+        <input type="text" name="Input1" id="Input1">
+        <label for="operation">Operation</label>
+        <select id="operation">
+            <option value="add">Add</option>
+            <option value="sub">Subtract</option>
+            <option value="div">Divide</option>
+            <option value="mult">Multiply</option>
+            <option value="mod">Modulus</option>
+        </select>
+        <label for="Input2">Input2:</label>
+        <input type="Input2" name="Input2" id="Input2">
+        <br/>
+        <br/>
+        <input type="submit" value="Submit"/>
+        <input type="reset"  value="RESET" style="color: red;"/>
+    </form>
+</body>
+</html>
