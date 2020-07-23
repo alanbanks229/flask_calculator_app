@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 
 # Creating the calculator application
@@ -15,9 +15,74 @@ def index():
 
     return render_template('index.html')
 
-@Flask_App.route('/operation')
+
+@Flask_App.route('/operation_result/', methods=['POST'])
 def operation_result():
-    return render_template('index.html')
+
+    # looks for html tags with specified name=
+    input1 = request.form['Input1']
+    input2 = request.form['Input2']
+    operation = request.form['operation']
+    result = None
+    # conditional to check if input1 AND input2 are instances int or float.
+    # also checking if operation is not null.
+    if (isinstance(input1, (int, long)) and 
+        isinstance(input2, (int, long)) and
+        operation):
+        if operation == "add":
+            result = add(input1, input2)
+        elif operation == "sub":
+            result = subtract(input1, input2)
+        elif operation == "div":
+            result = divide(input1, input2)
+        elif operation == "mult":
+            result = multiply(input1, input2)
+        else:
+            result = mod(input1, input2)
+        return render_template(
+            'index.html',
+            input1=input1,
+            input2=input2,
+            operation=operation,
+            result=result
+        )
+    # else
+    return render_template(
+        'index.html',
+        error="invalid input",
+        input1=input1,
+        input2=input2,
+        operation=operation
+    )
+
+def add(input1, input2):
+    answer = input1 + input2
+    print("The addition of", input1, "and", input2, "is", answer)
+    return answer
+
+def subtract(input1, input2):
+    answer = input1 - input2
+    print("The difference of", input1, "and", input2, "is", answer)
+    return answer
+
+def divide(input1, input2):
+    # try:
+    answer = input1 / input2
+    print("The division of", input1, "and", input2, "is", answer)
+    return answer
+    # except ZeroDivisionError:
+    #     print("Warning: dividing by zero is not allowed, redirecting you to menu")
+    #     return answer
+
+def multiply(input1, input2):
+    answer = input1 * input2
+    print("The multiplication of", input1, "and", input2, "is", answer)
+    return answer
+
+def mod(input1, input2):
+    answer = input1 % input2
+    print("The modulus of", input1, "and", input2, "is", answer)
+    return answer
 
 if __name__ == '__main__':
     Flask_App.debug = True
