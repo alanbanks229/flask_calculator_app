@@ -1,18 +1,12 @@
 from flask import Flask, render_template, request
 
-
-# Creating the calculator application
-# only will need 1 route index.html
-
 Flask_App = Flask(__name__) # Creating our Flask Instance
-
 
 @Flask_App.route('/', methods=['GET'])
 def index():
     """ Displays the index page accessible at '/' """
 
     return render_template('index.html')
-
 
 @Flask_App.route('/operation_result/', methods=['POST'])
 def operation_result():
@@ -31,13 +25,13 @@ def operation_result():
 
         #On Default, the operation on webpage is addition
         if operation == "add":
-            result = add(input1, input2)
             operation = "plus "
+            result = input1 + input2
             calculation_success = True
 
         elif operation == "sub":
-            result = subtract(input1, input2)
             operation = "minus "
+            result = input1 - input2
             calculation_success = True
 
         # this will throw ZeroDivisionError if input2 is 0
@@ -48,13 +42,13 @@ def operation_result():
             calculation_success = True
 
         elif operation == "mult":
-            result = multiply(input1, input2)
             operation = "multiplied by "
+            result = input1 * input2
             calculation_success = True
 
         else:
-            result = mod(input1, input2)
             operation = "modulo "
+            result = input1 % input2
             calculation_success = True
 
         return render_template(
@@ -82,27 +76,6 @@ def operation_result():
             operation=operation,
             error="Cannot perform numeric operations with provided input"
         )
-
-# Our helper methods.
-def add(input1, input2):
-    answer = input1 + input2
-    print("The addition of", input1, "and", input2, "is", answer)
-    return answer
-
-def subtract(input1, input2):
-    answer = input1 - input2
-    print("The difference of", input1, "and", input2, "is", answer)
-    return answer
-
-def multiply(input1, input2):
-    answer = input1 * input2
-    print("The multiplication of", input1, "and", input2, "is", answer)
-    return answer
-
-def mod(input1, input2):
-    answer = input1 % input2
-    print("The modulus of", input1, "and", input2, "is", answer)
-    return answer
 
 if __name__ == '__main__':
     Flask_App.debug = True
