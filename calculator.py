@@ -34,11 +34,22 @@ def operation_result():
         elif operation == "sub":
             result = subtract(input1, input2)
         elif operation == "div":
-            result = divide(input1, input2)
+            try:
+                result = input1 / input2
+            except ZeroDivisionError:
+                error = "Warning: dividing by zero is not allowed"
+                return render_template(
+                    'index.html',
+                    input1=input1,
+                    input2=input2,
+                    operation=operation,
+                    error=error
+                )
         elif operation == "mult":
             result = multiply(input1, input2)
         else:
             result = mod(input1, input2)
+        
         return render_template(
             'index.html',
             input1=input1,
@@ -64,15 +75,6 @@ def subtract(input1, input2):
     answer = input1 - input2
     print("The difference of", input1, "and", input2, "is", answer)
     return answer
-
-def divide(input1, input2):
-    # try:
-    answer = input1 / input2
-    print("The division of", input1, "and", input2, "is", answer)
-    return answer
-    # except ZeroDivisionError:
-    #     print("Warning: dividing by zero is not allowed, redirecting you to menu")
-    #     return answer
 
 def multiply(input1, input2):
     answer = input1 * input2
