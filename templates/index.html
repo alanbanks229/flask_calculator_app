@@ -28,7 +28,7 @@
         <input type="submit" value="Submit"/>
         <input type="reset"  value="RESET" style="color: red;"/>
     </form>
-    {% if input1 and input2 and operation and result %}
+    {% if successful %}
         <br/>
         <p>The calculation for {{input1}} {{operation}} {{input2}} is: {{result}}</p>
     {% endif %}

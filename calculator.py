@@ -21,6 +21,8 @@ def operation_result():
 
     error = None
     result = None
+    # we need below becaue 0 is seen as falsey
+    calculation_success = False
     try:
         # looks for html tags with specified name=
         input1 = float(request.form['Input1'])
@@ -31,25 +33,32 @@ def operation_result():
         if operation == "add":
             result = add(input1, input2)
             operation = "plus "
+            calculation_success = True
         elif operation == "sub":
             result = subtract(input1, input2)
             operation = "minus "
+            calculation_success = True
         elif operation == "div":
+            operation = "divided by "
+            calculation_success = True
             # this will throw ZeroDivisionError if input2 is 0
             result = input1 / input2
-            operation = "divided by "
+            calculation_success = True
         elif operation == "mult":
             result = multiply(input1, input2)
             operation = "multiplied by "
+            calculation_success = True
         else:
             result = mod(input1, input2)
             operation = "modulo "
+            calculation_success = True
         return render_template(
             'index.html',
             input1=input1,
             input2=input2,
             operation=operation,
-            result=result
+            result=result,
+            successful=calculation_success
         )
         
     except ZeroDivisionError:
