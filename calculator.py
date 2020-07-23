@@ -14,42 +14,33 @@ def operation_result():
 
     error = None
     result = None
-    calculation_success = False
+
+    # request.form looks for:
+    # html tags with matching "name= "
+    first_input = request.form['Input1']  
+    second_input = request.form['Input2']
+    operation = request.form['operation']
 
     try:
-        # request.form looks for:
-        # html tags with matching "name= "
-        input1 = float(request.form['Input1'])
-        input2 = float(request.form['Input2'])
-        operation = request.form['operation']
+        input1 = float(first_input)
+        input2 = float(second_input)
 
-        #On Default, the operation on webpage is addition
-        if operation == "add":
-            operation = "plus "
+        # On default, the operation on webpage is addition
+        if operation == "+":
             result = input1 + input2
-            calculation_success = True
 
-        elif operation == "sub":
-            operation = "minus "
+        elif operation == "-":
             result = input1 - input2
-            calculation_success = True
 
-        # this will throw ZeroDivisionError if input2 is 0
-        elif operation == "div":
-            operation = "divided by "
+        elif operation == "/":
             result = input1 / input2 
-            #calculation_success = True will not be hit if error occurs above.
-            calculation_success = True
 
-        elif operation == "mult":
-            operation = "multiplied by "
+        elif operation == "*":
             result = input1 * input2
-            calculation_success = True
 
         else:
-            operation = "modulo "
+            operation = "%"
             result = input1 % input2
-            calculation_success = True
 
         return render_template(
             'index.html',
@@ -57,7 +48,7 @@ def operation_result():
             input2=input2,
             operation=operation,
             result=result,
-            successful=calculation_success
+            calculation_success=True
         )
         
     except ZeroDivisionError:
@@ -66,14 +57,18 @@ def operation_result():
             input1=input1,
             input2=input2,
             operation=operation,
+            result="Bad Input",
+            calculation_success=False,
             error="You cannot divide by zero"
         )
     except ValueError:
         return render_template(
             'index.html',
-            input1=input1,
-            input2=input2,
+            input1=first_input,
+            input2=second_input,
             operation=operation,
+            result="Bad Input",
+            calculation_success=False,
             error="Cannot perform numeric operations with provided input"
         )
 

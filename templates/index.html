@@ -18,24 +18,24 @@
         <br/>
         <label for="operation">Operation</label>
         <select id="operation" name="operation">
-            <option value="add">Addition</option>
-            <option value="sub">Subtraction</option>
-            <option value="div">Division</option>
-            <option value="mult">Multiplication</option>
-            <option value="mod">Modulus</option>
+            <option value="+">Addition</option>
+            <option value="-">Subtraction</option>
+            <option value="/">Division</option>
+            <option value="*">Multiplication</option>
+            <option value="%">Modulus</option>
         </select>
         <br/>
         <input type="submit" value="Submit"/>
         <input type="reset"  value="RESET" style="color: red;"/>
     </form>
-    {% if successful %}
+    {% if calculation_success == True %}
         <br/>
         <p>The calculation for {{input1}} {{operation}} {{input2}} is: {{result}}</p>
     {% endif %}
-    {% if error %}
+    {% if calculation_success == False %}
         <br/>
         <p>{{error}}</p>
-        <p>{{input1}} {{operation}} {{input2}} = "bad input"</p>
+        <p>{{input1}} {{operation}} {{input2}} = "{{result}}"</p>
     {% endif %}
 </body>
 </html>
