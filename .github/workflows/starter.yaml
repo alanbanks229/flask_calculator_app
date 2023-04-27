@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        # python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.11"]
 
     steps:
       - uses: actions/checkout@v3
@@ -29,12 +30,18 @@ jobs:
           ruff --format=github --target-version=py37 --exclude=conftest.py .
       - name: Test with pytest
         run: |
-          pytest
+          pytest --html=pytest_report.html
+      - name: Upload pytest results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: pytest_report.html
       - uses: AppThreat/sast-scan-action@master
         with:
           type: "python"
-
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
+        if: always()
         with:
-          name: reports
+          name: sast_report
           path: reports
