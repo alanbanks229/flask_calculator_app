@@ -29,10 +29,4 @@ jobs:
           ruff --format=github --target-version=py37 --exclude=conftest.py .
       - name: Test with pytest
         run: |
-          pytest --html=report.html
-
-      - name: Upload test report
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-report
-          path: report.html
+          pytest

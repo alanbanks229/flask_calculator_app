@@ -20,14 +20,14 @@ def test_operation_result(client):
     assert response.status_code == 200
     assert b'15.0' in response.data
 
-def test_operation_broken_result(client):
-    response = client.post('/operation_result/', data=dict(
-        Input1='10',
-        Input2='5',
-        operation='-'
-    ))
-    assert response.status_code == 200
-    assert b'15.0' in response.data
+# def test_operation_broken_result(client):
+#     response = client.post('/operation_result/', data=dict(
+#         Input1='10',
+#         Input2='5',
+#         operation='-'
+#     ))
+#     assert response.status_code == 200
+#     assert b'15.0' in response.data
 
 
 def test_operation_result_bad_input(client):
