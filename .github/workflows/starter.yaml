@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install ruff pytest
+          pip install ruff pytest pytest-html
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with ruff
         run: |
@@ -29,4 +29,10 @@ jobs:
           ruff --format=github --target-version=py37 --exclude=conftest.py .
       - name: Test with pytest
         run: |
-          pytest
+          pytest --html=report.html
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-report
+          path: report.html
