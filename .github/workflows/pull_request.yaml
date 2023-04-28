@@ -2,7 +2,7 @@ name: Pull request
 on: pull_request
 
 jobs:
-  build:
+  pytest:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,11 +28,22 @@ jobs:
         with:
           name: test-results
           path: pytest_report.html
-      - uses: AppThreat/sast-scan-action@master
-        with:
-          type: "python"
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: sast_report
-          path: reports
+          
+  sast:
+    runs-on: ubuntu-latest
+    env:
+        python_version: "3.11"
+    steps:
+        - uses: actions/checkout@v3
+        - name: Set up Python ${{ env.python_version }}
+          uses: actions/setup-python@v4
+          with:
+            python-version: ${{ env.python_version }}
+        - uses: AppThreat/sast-scan-action@master
+          with:
+            type: "python"
+        - uses: actions/upload-artifact@v3
+          if: always()
+          with:
+            name: sast_report
+            path: reports
