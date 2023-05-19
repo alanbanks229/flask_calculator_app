@@ -13,7 +13,7 @@ def index():
 def operation_result():
     """Route where we send calculator form input"""
 
-    # error = None
+    error = None
     result = None
 
     # request.form looks for:
